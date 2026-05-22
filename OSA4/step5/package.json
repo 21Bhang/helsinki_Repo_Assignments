@@ -1,0 +1,7 @@
+{
+  "name": "bloglist-step5",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "node --test"
+  }
+}
