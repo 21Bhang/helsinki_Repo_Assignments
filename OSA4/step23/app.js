@@ -38,6 +38,12 @@ app.use("/api/blogs", blogsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
 
+// 5.18: mount the testing router only in NODE_ENV=test for OSA5 E2E tests.
+if (process.env.NODE_ENV === "test") {
+  const testingRouter = require("./controllers/testing");
+  app.use("/api/testing", testingRouter);
+}
+
 // SPA fallback: any non-/api GET returns index.html so client-side routing works
 if (hasFrontend) {
   app.get(/^\/(?!api).*/, (request, response) => {

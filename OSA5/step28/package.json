@@ -1,0 +1,14 @@
+{
+  "name": "bloglist-e2e-step28",
+  "version": "1.0.0",
+  "description": "Playwright end-to-end tests for the OSA5 bloglist frontend.",
+  "type": "commonjs",
+  "scripts": {
+    "test": "playwright test",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.5"
+  }
+}
