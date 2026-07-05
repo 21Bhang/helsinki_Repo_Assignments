@@ -1,0 +1,36 @@
+const baseUrl = "http://localhost:3001/anecdotes";
+
+export const getAnecdotes = async () => {
+  const response = await fetch(baseUrl);
+  if (!response.ok) throw new Error("Service unavailable");
+  return response.json();
+};
+
+export const updateAnecdote = async (updatedAnecdote) => {
+  const response = await fetch(`${baseUrl}/${updatedAnecdote.id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatedAnecdote),
+  });
+  if (!response.ok) throw new Error("Failed to update anecdote");
+  return response.json();
+};
+
+// 🚀 UPDATED: Read the exact error payload message back from the JSON Server backend
+export const createAnecdote = async (newAnecdote) => {
+  const response = await fetch(baseUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newAnecdote),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    // Throw the validation string provided by the backend template
+    throw new Error(
+      errorData.error || "too short, anecdote must have length 5 or more",
+    );
+  }
+
+  return response.json();
+};
