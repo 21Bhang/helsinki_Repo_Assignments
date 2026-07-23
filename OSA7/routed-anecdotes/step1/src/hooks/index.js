@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import * as anecdoteService from "../services/anecdotes";
 
 export const useField = (type) => {
   const [value, setValue] = useState("");
@@ -11,12 +12,20 @@ export const useField = (type) => {
     setValue("");
   };
 
-  // Return only the props needed for the input element
-  // Exclude 'reset' from being spread onto the input
   return {
     type,
     value,
     onChange,
     reset,
   };
+};
+
+export const useAnecdotes = () => {
+  const [anecdotes, setAnecdotes] = useState([]);
+
+  useEffect(() => {
+    anecdoteService.getAll().then((data) => setAnecdotes(data));
+  }, []);
+
+  return { anecdotes };
 };
