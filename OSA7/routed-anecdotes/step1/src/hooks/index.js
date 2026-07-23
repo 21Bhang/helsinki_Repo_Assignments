@@ -11,6 +11,8 @@ export const useField = (type) => {
     setValue("");
   };
 
+  // Return only the props needed for the input element
+  // Exclude 'reset' from being spread onto the input
   return {
     type,
     value,
