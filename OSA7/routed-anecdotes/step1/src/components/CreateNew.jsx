@@ -16,9 +16,9 @@ const CreateNew = (props) => {
   };
 
   const handleReset = () => {
-    content.onChange({ target: { value: "" } });
-    author.onChange({ target: { value: "" } });
-    info.onChange({ target: { value: "" } });
+    content.reset();
+    author.reset();
+    info.reset();
   };
 
   return (
