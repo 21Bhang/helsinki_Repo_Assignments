@@ -1,4 +1,5 @@
 import useBlogStore from '../stores/blogStore'
+import CommentForm from './CommentForm'
 
 const BlogList = ({ blogs }) => {
   const { likeBlog, deleteBlog } = useBlogStore()
@@ -11,7 +12,7 @@ const BlogList = ({ blogs }) => {
     try {
       await likeBlog(blog.id)
     } catch (error) {
-      console.error('Failed to like blog', error)
+      console.error(error)
     }
   }
 
@@ -20,7 +21,7 @@ const BlogList = ({ blogs }) => {
       try {
         await deleteBlog(id)
       } catch (error) {
-        console.error('Failed to delete blog', error)
+        console.error(error)
       }
     }
   }
@@ -41,6 +42,14 @@ const BlogList = ({ blogs }) => {
               delete
             </button>
           </p>
+
+          <div className="comments-section">
+            <h4>Comments:</h4>
+            <CommentForm blogId={blog.id} />
+            <ul className="comments-list">
+              {blog.comments && blog.comments.map((c, i) => <li key={i}>{c.text}</li>)}
+            </ul>
+          </div>
         </div>
       ))}
     </div>
