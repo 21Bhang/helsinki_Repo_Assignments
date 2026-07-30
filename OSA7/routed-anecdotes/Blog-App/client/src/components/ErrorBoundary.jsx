@@ -1,31 +1,49 @@
-import React from 'react'
+import { Component } from 'react'
 
-class ErrorBoundary extends React.Component {
+export default class ErrorBoundary extends Component {
   constructor(props) {
     super(props)
-    this.state = { hasError: false }
+    this.state = { hasError: false, error: null, retryCount: 0 }
   }
 
   static getDerivedStateFromError(error) {
-    return { hasError: true }
+    return { hasError: true, error }
   }
 
-  componentDidCatch(error, info) {
-    console.error('ErrorBoundary caught an error', error, info)
+  componentDidCatch(error, errorInfo) {
+    // eslint-disable-next-line no-console
+    console.error('ErrorBoundary caught an error:', error, errorInfo)
+  }
+
+  handleReset = () => {
+    // Bump retryCount so the wrapped subtree fully remounts (via the key
+    // below) and gets a clean render — even on the same route.
+    this.setState((s) => ({
+      hasError: false,
+      error: null,
+      retryCount: s.retryCount + 1,
+    }))
   }
 
   render() {
     if (this.state.hasError) {
       return (
-        <div className="container error-fallback">
-          <h2>Something went wrong :</h2>
-          <p>Please make a bug report to mluukkai in Discord</p>
+        <div className="error-boundary" role="alert">
+          <h2>Something went wrong</h2>
+          <p>
+            An unexpected error occurred while rendering this part of the
+            application. You can try again &mdash; the navigation above is still
+            available.
+          </p>
+          {this.state.error && <pre>{this.state.error.toString()}</pre>}
+          <button className="btn" onClick={this.handleReset}>
+            Try again
+          </button>
         </div>
       )
     }
-
-    return this.props.children
+    // The key forces a fresh mount of children after a retry, so any
+    // component that threw is re-created from scratch.
+    return <div key={this.state.retryCount}>{this.props.children}</div>
   }
 }
-
-export default ErrorBoundary

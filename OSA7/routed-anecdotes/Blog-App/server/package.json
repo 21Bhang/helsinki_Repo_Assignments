@@ -1,0 +1,34 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "BlogList backend (Full Stack Open part 7 exercises 7.7-7.14)",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "build:frontend": "cd ../frontend && npm install && npm run build",
+    "build": "npm run build:frontend",
+    "start:full": "npm run build && npm start",
+    "lint": "eslint src"
+  },
+  "keywords": [
+    "fullstack",
+    "bloglist",
+    "express"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.5.0",
+    "mongoose-unique-validator": "^4.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0"
+  }
+}
