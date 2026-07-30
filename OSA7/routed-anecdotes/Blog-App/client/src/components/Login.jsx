@@ -1,15 +1,15 @@
-import { useState } from 'react'
+import { useField } from '../hooks/useField'
 import useUserStore from '../stores/userStore'
 
 const Login = () => {
-  const [username, setUsername] = useState('')
+  const username = useField('text')
   const { login } = useUserStore()
 
-  const handleLogin = e => {
+  const handleLogin = async e => {
     e.preventDefault()
-    if (username) {
-      login(username)
-      setUsername('')
+    if (username.value) {
+      await login(username.value)
+      username.reset()
     }
   }
 
@@ -19,7 +19,7 @@ const Login = () => {
       <form onSubmit={handleLogin}>
         <div className="form-group">
           <label>username:</label>
-          <input value={username} onChange={e => setUsername(e.target.value)} required />
+          <input {...username.input} required />
         </div>
         <button type="submit" className="btn btn-primary">
           login

@@ -1,16 +1,23 @@
-import { useState } from 'react'
+import { useField } from '../hooks/useField'
+import useUserStore from '../stores/userStore'
 
 const CreateBlog = ({ addBlog }) => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+  const title = useField('text')
+  const author = useField('text')
+  const url = useField('text')
+  const { user } = useUserStore()
 
   const handleSubmit = e => {
     e.preventDefault()
-    addBlog({ title, author, url })
-    setTitle('')
-    setAuthor('')
-    setUrl('')
+    addBlog({
+      title: title.value,
+      author: author.value,
+      url: url.value,
+      userId: user?.id,
+    })
+    title.reset()
+    author.reset()
+    url.reset()
   }
 
   return (
@@ -19,15 +26,15 @@ const CreateBlog = ({ addBlog }) => {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>title:</label>
-          <input value={title} onChange={e => setTitle(e.target.value)} required />
+          <input {...title.input} required />
         </div>
         <div className="form-group">
           <label>author:</label>
-          <input value={author} onChange={e => setAuthor(e.target.value)} required />
+          <input {...author.input} required />
         </div>
         <div className="form-group">
           <label>url:</label>
-          <input value={url} onChange={e => setUrl(e.target.value)} required />
+          <input {...url.input} required />
         </div>
         <button type="submit" className="btn btn-primary">
           create
