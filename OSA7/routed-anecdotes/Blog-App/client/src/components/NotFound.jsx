@@ -3,7 +3,7 @@ const NotFound = () => {
     <div className="container not-found">
       <h2>404 - Page not found</h2>
     </div>
-  );
-};
+  )
+}
 
-export default NotFound;
+export default NotFound
