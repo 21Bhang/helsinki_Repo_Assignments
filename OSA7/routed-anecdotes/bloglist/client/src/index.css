@@ -1,0 +1,21 @@
+body {
+  font-family: sans-serif;
+  padding: 20px;
+}
+.blog {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+.notification {
+  padding: 10px;
+  background: #d4edda;
+  color: #058521;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+.error {
+  background: #f8d7da;
+  color: #721c24;
+}
