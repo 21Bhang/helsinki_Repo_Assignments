@@ -1,4 +1,4 @@
-# BlogList — Full Stack Open Part 7 (Exercises 7.7–7.20)
+# Blog-App — Full Stack Open Part 7 (Exercises 7.7–7.20)
 
 A full-stack blog application built with React + Vite on the frontend and
 Express + MongoDB (Mongoose) on the backend. The UI follows a clean white &
@@ -8,15 +8,15 @@ view with a comments section, and a users table.
 
 This repository completes exercises **7.7 through 7.20** of the University of
 Helsinki's [Full Stack Open](https://fullstackopen.com/en/) course (part 7),
-building on the part-5 BlogList foundation (exercises 5.24–5.28).
+building on the part-5 Blog-App foundation (exercises 5.24–5.28).
 
 ---
 
 ## Project structure
 
 ```
-bloglist/
-├── backend/                 # Express + Mongoose REST API (Exercise 7.7)
+Blog-App/
+├── server/                 # Express + Mongoose REST API (Exercise 7.7)
 │   ├── package.json         #   separate package.json, build/start scripts
 │   ├── .env                 #   MONGODB_URI, SECRET, PORT  (not committed)
 │   └── src/
@@ -35,7 +35,7 @@ bloglist/
 │       │   ├── db.js        #   MongoDB connection helper
 │       │   └── seed.js      #   demo data seeding script
 │       └── .eslintrc.json
-├── frontend/                # React 18 + Vite SPA
+├── client/                # React 18 + Vite SPA
 │   ├── package.json         #   dev/build/lint/format scripts
 │   ├── vite.config.js       #   dev proxy → backend on port 3001
 │   ├── .prettierrc.json     #   Exercise 7.10
@@ -77,7 +77,7 @@ bloglist/
 
 ## Environment
 
-The backend reads its configuration from `backend/.env`:
+The backend reads its configuration from `server/.env`:
 
 ```
 MONGODB_URI=<your MongoDB connection string>
@@ -85,7 +85,7 @@ SECRET=<a long random string used to sign JWTs>
 PORT=3001
 ```
 
-The `.env` file is git-ignored. Create it in `backend/` before running.
+The `.env` file is git-ignored. Create it in `server/` before running.
 
 ---
 
@@ -96,16 +96,16 @@ The `.env` file is git-ignored. Create it in `backend/` before running.
 The backend serves the built frontend, so the whole app runs from one server:
 
 ```bash
-cd bloglist/backend
+cd Blog-App/server
 npm install
 npm run start:full
 ```
 
-`npm run start:full` builds the frontend (`vite build` → `frontend/dist`) and
+`npm run start:full` builds the frontend (`vite build` → `client/dist`) and
 then starts the Express server, which:
 
 1. serves the REST API under `/api/*`,
-2. serves the static frontend bundle from `frontend/dist`,
+2. serves the static frontend bundle from `client/dist`,
 3. falls back to `index.html` for any non-API GET request (SPA client-side
    routing works on refresh / deep links).
 
@@ -115,12 +115,12 @@ Open `http://localhost:3001/`.
 
 ```bash
 # terminal 1 — backend with auto-restart
-cd bloglist/backend
+cd Blog-App/server
 npm install
 npm run dev
 
 # terminal 2 — frontend with Vite HMR
-cd bloglist/frontend
+cd Blog-App/client
 npm install
 npm run dev
 ```
@@ -131,35 +131,27 @@ requests to the backend on port 3001 (see `vite.config.js`).
 ### Seeding demo data
 
 ```bash
-cd bloglist/backend
-node src/utils/seed.js
+cd Blog-App/server
 ```
 
 This wipes and re-populates MongoDB with demo users and blogs that match the
 reference design:
 
-| name                | username  | password  | blogs |
-|---------------------|-----------|-----------|-------|
-| Matti Luukkainen    | mluukkai  | salainen  | 3     |
-| Outi Savolainen     | ousavola  | (hashed)  | 2     |
-| Arto Hellas         | hellas    | (hashed)  | 1     |
-| Superuser           | root      | sekret    | 0     |
-
-The blog "The Single Responsibility Principle" is seeded with three comments
-("a must read", "a true classic", "has this still meaning in the LLM era?").
-
-**Log in with `mluukkai` / `salainen` (or `root` / `sekret`).**
-
----
+| name                | username  | blogs |
+|---------------------|-----------|-------|
+| Matti Luukkainen    | mluukkai  | 3     |
+| Outi Savolainen     | ousavola  | 2     |
+| Arto Hellas         | hellas    | 1     |
+| Superuser           | root      | 0     |
 
 ## Code formatting (Exercise 7.10)
 
-Prettier is configured in `frontend/.prettierrc.json` (2-space indent, no
+Prettier is configured in `client/.prettierrc.json` (2-space indent, no
 semicolons, single quotes, trailing commas, print width 80) with a matching
 `.editorconfig`.
 
 ```bash
-cd bloglist/frontend
+cd Blog-App/client
 npm run format         # write formatted files
 npm run format:check   # CI-style check (fails on unformatted files)
 ```
@@ -189,9 +181,9 @@ Authenticated requests send `Authorization: Bearer <token>`.
 ## Exercises covered
 
 ### 7.7 — Frontend and backend in the same repository
-The `bloglist/` repo contains `backend/` and `frontend/`, each with its own
+The `Blog-App/` repo contains `server/` and `client/`, each with its own
 `package.json`. After building the frontend, the Express backend serves the
-production bundle from `frontend/dist` (static middleware + SPA catch-all
+production bundle from `client/dist` (static middleware + SPA catch-all
 fallback), so `npm run start:full` delivers the entire app from one origin.
 
 ### 7.8 — Error boundary
@@ -287,6 +279,6 @@ highlighting, and focus states on form inputs.
 ## Tech stack
 
 - **Frontend:** React 18, Vite 5, React Router 6, Zustand 4
-- **Backend:** Express 4, Mongoose 8, MongoDB, JSON Web Tokens, bcryptjs,
+- **Backend:** Express 4, Mongoose 7, MongoDB, JSON Web Tokens, bcryptjs,
   express-async-errors, cors, dotenv
 - **Tooling:** ESLint, Prettier, EditorConfig
