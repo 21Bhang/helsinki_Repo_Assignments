@@ -1,5 +1,5 @@
-import { useField } from '../hooks/useField'
-import useUserStore from '../stores/userStore'
+import { useField } from '../hooks/useField.js'
+import useUserStore from '../stores/userStore.js'
 
 const Login = () => {
   const username = useField('text')

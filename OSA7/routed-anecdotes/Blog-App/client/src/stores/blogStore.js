@@ -3,9 +3,21 @@ import blogService from '../services/blogs'
 
 const useBlogStore = create(set => ({
   blogs: [],
+  users: [],
+  currentUser: null,
   fetchBlogs: async () => {
     const blogs = await blogService.getAll()
     set({ blogs })
+  },
+  fetchUsers: async () => {
+    const response = await fetch('http://localhost:3001/api/users')
+    const users = await response.json()
+    set({ users })
+  },
+  fetchUser: async id => {
+    const response = await fetch(`http://localhost:3001/api/users/${id}`)
+    const user = await response.json()
+    set({ currentUser: user })
   },
   createBlog: async content => {
     const newBlog = await blogService.create(content)

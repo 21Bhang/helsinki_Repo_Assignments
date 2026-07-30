@@ -8,6 +8,9 @@ import NotFound from './components/NotFound'
 import BlogList from './components/BlogList'
 import CreateBlog from './components/CreateBlog'
 import Login from './components/Login'
+// Add to imports:
+import Users from './components/Users'
+import UserDetail from './components/UserDetail'
 import './App.css'
 
 const App = () => {
